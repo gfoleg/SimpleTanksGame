@@ -49,7 +49,6 @@ class Menu:
         item = 0
         while done:
             screen.blit(first, first_rect)
-
             mp = pygame.mouse.get_pos()
             for i in self.item:
                 if mp[0] > i[0] and mp[0] < i[0] + 155 and mp[1] > i[1] and mp[1] < i[1] + 50:
@@ -69,6 +68,7 @@ class Menu:
                             item += 1
                 if e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
                     if item == 0:
+                        main_player.hp = main_player.max_hp
                         done = False
                     elif item == 1:
                         exit()
@@ -329,9 +329,10 @@ while run:
         draw_text(screan, 25, 300, 480, "SCORE:")
         draw_text(screan, 18, 400, 480, "Money:" + str(money))
         draw_text(screan, 18, 500, 480, "KO's:" + str(KO))
-        if main_player.hp <= -10:
-            time.sleep(5)
-            run = False
+        if main_player.hp <= -20:
+            time.sleep(1)
+            game = Menu(choose)
+            game.menu()
 
 
         pygame.display.update()
