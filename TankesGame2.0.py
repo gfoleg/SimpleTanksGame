@@ -79,7 +79,7 @@ class Menu:
 class Player(pygame.sprite.Sprite):
     def __init__(self,img):
         super(Player, self).__init__()
-        self.image = pygame.transform.scale(img,(65,60))
+        self.image = pygame.transform.scale(img,(55,55))
 
         self.image_up = self.image
         self.image_down = pygame.transform.flip(self.image,False,True)
