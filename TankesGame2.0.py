@@ -123,7 +123,7 @@ class Player(pygame.sprite.Sprite):
 
 
     def update(self):
-        # if KO >= 30: # перенести це в hits = pygame.sprite.groupcollide(bullets,enemies,True,True)
+        # if KO >= 30: #
         #     img = player_img_KOS
         #     self.image = pygame.transform.scale(img,(65,60))
         #     self.hp = 200
@@ -196,6 +196,12 @@ class Enemy_plane(pygame.sprite.Sprite):
         self.speedy = random.randint(2,4)
 
     def update(self):
+        if KO >= 30:
+            self.speedx = random.randint(-5, 5)
+            self.speedy = random.randint(4, 8)
+            if KO >= 100:
+                self.speedx = random.randint(-5, 5)
+                self.speedy = random.randint(10, 30)
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         if self.rect.top > height or self.rect.left > width or self.rect.right < 0 :
@@ -268,9 +274,9 @@ class Block(pygame.sprite.Sprite):
 
 
 player_img1 = pygame.image.load("img/Enemies/tank.png")
-player_img_KOS = pygame.image.load("img/lopard2.png")
+player_img_KOS = pygame.image.load("img/Enemies/enemyGreen5.png")
 enemy_img1 = pygame.image.load("img/samolet-removebg-preview.png")
-player_img_leader= pygame.image.load("img/Enemies/ShipDestroyerHull.png")
+player_img_leader= pygame.image.load("img/Enemies/ShipBattleshipHull.png")
 laser_img = pygame.image.load("img/raketa2.png")
 first = pygame.image.load("img/backgrounds/Zastavka2.0.png")
 first = pygame.transform.scale(first, (width,height))
@@ -436,12 +442,12 @@ while run:
     hits = pygame.sprite.groupcollide(bullets,enemies,True,True)
     if hits:
         for hit in hits:
-            if KO == 30:
+            if KO >= 30:
                 img = player_img_KOS
                 main_player.image = pygame.transform.scale(img, (180, 180))
                 main_player.hp = 200
                 main_player.max_hp = 200
-                if KO == 100:
+                if KO >= 100:
                     img = player_img_leader
                     main_player.image = pygame.transform.scale(img, (100, 100))
                     main_player.speed = 15
@@ -462,15 +468,13 @@ while run:
     all_sprites.draw(screan)
     draw_hp(screan, main_player.hp, main_player.max_hp, main_player.rect.left + 45, main_player.rect.bottom - 40)
     draw_text(screan, 25, 100,20,"hp:"+str(main_player.hp))
-    draw_text(screan, 25, 250,20, "Money:" + str(money))
-    draw_text(screan, 25, 400, 20, "KO's:" + str(KO))
+    draw_text(screan, 25, 250, 20, "KO's:" + str(KO))
     draw_text(screan, 30, 400, 650, "Press `m` to menu")
     if main_player.hp <= 0:
         all_sprites.draw(screan)
         draw_text(screan, 60, 400, 400, "GAME OVER")
         draw_text(screan, 20, 400, 450, "*game will close at 2 secs")
         draw_text(screan, 25, 300, 480, "SCORE:")
-        draw_text(screan, 18, 400, 480, "Money:" + str(money))
         draw_text(screan, 18, 500, 480, "KO's:" + str(KO))
         if main_player.hp <= -20:
             time.sleep(1)
