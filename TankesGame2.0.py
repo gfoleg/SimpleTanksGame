@@ -183,6 +183,15 @@ class Player(pygame.sprite.Sprite):
         all_sprites.add(b)
         bullets.add(b)
 
+class Boss(pygame.sprite.Sprite):
+    def __init__(self, img):
+        super(Boss, self).__init__()
+        self.image = pygame.transform.scale(img, (150, 100))
+        self.rect = self.image.get_rect()
+        self.rect.centerx = random.randint(0 + self.rect.w // 2, 600 - self.rect.w // 2)
+        self.rect.centery = random.randint(-100, -50)
+        self.speedx = random.randint(3, 4)
+        self.speedy = random.randint(2, 4)
 
 class Enemy_plane(pygame.sprite.Sprite):
     def __init__(self,img):
@@ -281,6 +290,7 @@ laser_img = pygame.image.load("img/raketa2.png")
 first = pygame.image.load("img/backgrounds/Zastavka2.0.png")
 first = pygame.transform.scale(first, (width,height))
 first_rect = first.get_rect()
+boss_img = pygame.image.load("img/Enemies/Tank_Boss.png")
 background = pygame.image.load("img/desert_2.png")
 background = pygame.transform.scale(background, (width,height))
 background_rect = background.get_rect()
@@ -466,10 +476,10 @@ while run:
     screan.blit(background, background_rect)
     #background_rect.x += 1
     all_sprites.draw(screan)
-    draw_hp(screan, main_player.hp, main_player.max_hp, main_player.rect.left + 45, main_player.rect.bottom - 40)
-    draw_text(screan, 25, 100,20,"hp:"+str(main_player.hp))
-    draw_text(screan, 25, 250, 20, "KO's:" + str(KO))
-    draw_text(screan, 30, 400, 650, "Press `m` to menu")
+    draw_hp(screan, main_player.hp, main_player.max_hp, 130, 20)
+    draw_text(screan, 25, 70,20,"hp:"+str(main_player.hp))
+    draw_text(screan, 25, 800, 20, "KO's:" + str(KO))
+    draw_text(screan, 30, 600, 20, "Press `m` to menu")
     if main_player.hp <= 0:
         all_sprites.draw(screan)
         draw_text(screan, 60, 400, 400, "GAME OVER")
